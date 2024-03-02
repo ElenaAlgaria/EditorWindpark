@@ -1,5 +1,14 @@
 package windparks.model
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.TextField
+import androidx.compose.runtime.Composable
 import java.awt.Toolkit
 import java.net.URL
 import java.text.DecimalFormatSymbols
@@ -10,10 +19,15 @@ import kotlinx.coroutines.SupervisorJob
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.ResourceLoader
 import androidx.compose.ui.res.loadImageBitmap
+import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 enum class WindparkState( val description: String) {
     PROJECTED("geplant"),
@@ -137,6 +151,9 @@ class Windpark(val id: Int = System.currentTimeMillis().toInt(), name: String? =
 
     fun loadImageBitmap(){
         //TODO: image asynchron laden
+        modelScope.launch {
+            imageBitmap = getImageBitmapFromUrl(url = imageUrl!!)
+        }
     }
 
 

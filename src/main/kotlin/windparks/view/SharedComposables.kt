@@ -101,6 +101,7 @@ fun<T> GenericExplorer(data: List<T>,
         }
         VerticalScrollbar(adapter = ScrollbarAdapter(scrollState), Modifier.align(Alignment.TopEnd))
     }
+
 }
 
 @Composable

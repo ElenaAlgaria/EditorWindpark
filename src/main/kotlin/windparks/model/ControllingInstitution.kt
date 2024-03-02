@@ -85,4 +85,8 @@ class ControllingInstitution {
         }
     }
 
+    fun isWindparkUnderControl(windpark: Windpark): Boolean{
+        return windparkUnderControl == windpark
+    }
+
 }
