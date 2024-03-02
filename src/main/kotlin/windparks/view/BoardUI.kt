@@ -97,15 +97,13 @@ private fun Explorer(institution: ControllingInstitution) {
 @Composable
 private fun Editor(windpark: Windpark?) {
 
-    if (windpark != null) {
-//        GenericEditor(   item = windpark,
-//            selectText = "Select a wind park",
-//            backgroundImage = ,
-//            headerContent = {HeaderContent(windpark)},
-//            formContent = {  })
+        GenericEditor(   item = windpark,
+            selectText = "Select a windpark",
+            backgroundImage = windpark?.imageBitmap ?: Windpark.defaultImageBitmap,
+            headerContent = {HeaderContent(windpark)},
+            formContent = {  })
     }
 
-}
 
 @Composable
 fun HeaderContent(windpark: Windpark?) {
