@@ -17,6 +17,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.ApplicationScope
@@ -97,37 +98,42 @@ private fun Explorer(institution: ControllingInstitution) {
 @Composable
 private fun Editor(windpark: Windpark?) {
 
-        GenericEditor(   item = windpark,
-            selectText = "Select a windpark",
-            backgroundImage = windpark?.imageBitmap ?: Windpark.defaultImageBitmap,
-            headerContent = {HeaderContent(windpark)},
-            formContent = {  })
-    }
+    GenericEditor(item = windpark,
+        selectText = "Select a windpark",
+        backgroundImage = windpark?.imageBitmap ?: Windpark.defaultImageBitmap,
+        headerContent = { HeaderContent(windpark) },
+        formContent = { })
+}
 
 
 @Composable
 fun HeaderContent(windpark: Windpark?) {
+        Row(horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()) {
+            Column(verticalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxHeight().padding(16.dp)) {
+                Text(text = windpark?.name.format(), fontSize = 35.sp, fontWeight = FontWeight.Light)
+                Text(text = windpark?.canton.format(), fontSize = 25.sp, fontWeight = FontWeight.Thin)
 
-    Box(Modifier.fillMaxWidth().background(Color.Gray)) {
-        Row(modifier = Modifier.align(Alignment.CenterStart)) {
-            if (windpark != null) {
-                windpark.name?.let {
-                    FormTextField(label = windpark.name!!,
-                        labelWidth = 40.dp,
-                        modifier = Modifier.weight(1f),
-                        value = it,
-                        onValueChange = {})
-                }
+                Spacer(modifier = Modifier.size(100.dp))
+
+                Text(text = "${windpark?.installedPower_KW} kW", fontSize = 25.sp, fontWeight = FontWeight.Thin)
+                Text(text = "${windpark?.totalProduction_MWH} MWH", fontSize = 25.sp, fontWeight = FontWeight.Thin)
             }
+            Image(
+                bitmap = windpark?.imageBitmap ?: Windpark.defaultImageBitmap,
+                contentDescription = windpark?.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.width(230.dp).height(300.dp)
+            )
         }
     }
-}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CardExplorer(windpark: Windpark, institution: ControllingInstitution) {
     Card(
-        onClick = { institution.updateWindparkUnderControl(windpark)},
+        onClick = { institution.updateWindparkUnderControl(windpark) },
         modifier = Modifier.fillMaxWidth(),
         backgroundColor = if (institution.isWindparkUnderControl(windpark)) Color.LightGray else Color.White
     ) {
@@ -154,7 +160,7 @@ fun CardExplorer(windpark: Windpark, institution: ControllingInstitution) {
                     Text(text = "${windpark.installedPower_KW} kW", color = Color.Gray, fontSize = 13.sp)
                 }
             }
-            Column(modifier = Modifier.align(Alignment.Top).padding(0.dp,0.dp,10.dp,0.dp)) {
+            Column(modifier = Modifier.align(Alignment.Top).padding(0.dp, 0.dp, 10.dp, 0.dp)) {
                 Text(text = windpark.canton.format(), fontSize = 13.sp)
             }
         }
