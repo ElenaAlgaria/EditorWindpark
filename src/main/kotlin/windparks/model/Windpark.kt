@@ -32,7 +32,11 @@ import kotlinx.coroutines.launch
 enum class WindparkState( val description: String) {
     PROJECTED("geplant"),
     OPERATIONAL("in Betrieb"),
-    UNDER_CONSTRUCTION("in Bau")
+    UNDER_CONSTRUCTION("in Bau");
+
+    fun stateDescription(dscrptn: String): Boolean {
+        return dscrptn == description
+    }
 }
 
 private fun String?.asWindparkState() : WindparkState? = WindparkState.values().find { it.description == this }
@@ -110,29 +114,42 @@ class Windpark(val id: Int = System.currentTimeMillis().toInt(), name: String? =
 
     //TODO: Implementierungen ergänzen gemäss TestCase
 
-
     fun updateConstructionStart(valueAsText: String) = valueAsText.ifInt { constructionStart = it }
 
     fun updateCompletion(valueAsText: String)        = valueAsText.ifInt { completion = it }
 
     fun updateInstalledPower(valueAsText: String)    = valueAsText.ifInt { installedPower_KW = it }
 
-    fun updateProduction2015(valueAsText: String)    = valueAsText.ifDouble { production2015_MWH = it }
+    fun updateCount(valueAsText: String)    = valueAsText.ifInt { count = it }
 
-    fun updateProduction2016(valueAsText: String)    = valueAsText.ifDouble { production2016_MWH = it }
+    fun updateProduction2015(valueAsText: String)  {
+        valueAsText.ifDouble { production2015_MWH = it }
+        totalProduction_MWH = totalProduction()
+    }
 
-    fun updateProduction2017(valueAsText: String)    = valueAsText.ifDouble { production2017_MWH = it}
+    fun updateProduction2016(valueAsText: String){
+        valueAsText.ifDouble { production2016_MWH = it }
+        totalProduction_MWH = totalProduction()
+    }
 
-    fun updateProduction2018(valueAsText: String)    = valueAsText.ifDouble { production2018_MWH = it}
+    fun updateProduction2017(valueAsText: String){
+        valueAsText.ifDouble { production2017_MWH = it}
+        totalProduction_MWH = totalProduction()
+    }
+
+    fun updateProduction2018(valueAsText: String) {
+        valueAsText.ifDouble { production2018_MWH = it}
+        totalProduction_MWH = totalProduction()
+    }
 
     fun updateLongitude(valueAsText: String)         = valueAsText.ifDouble { longitude = it }
 
     fun updateLatitude(valueAsText: String)          = valueAsText.ifDouble { latitude = it }
 
-
     fun updateStatus(newValue: WindparkState){
         status = newValue
     }
+
 
     fun updateCommunes(valueAsText: String){
         communes = valueAsText.ifBlank { null }

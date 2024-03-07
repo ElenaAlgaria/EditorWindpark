@@ -3,6 +3,8 @@ package windparks.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 
 import androidx.compose.material.*
@@ -26,6 +28,7 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
 import windparks.model.ControllingInstitution
 import windparks.model.Windpark
+import windparks.model.WindparkState
 
 @Composable
 fun ApplicationScope.SupervisoryBoardWindow(institution: ControllingInstitution) {
@@ -102,32 +105,125 @@ private fun Editor(windpark: Windpark?) {
         selectText = "Select a windpark",
         backgroundImage = windpark?.imageBitmap ?: Windpark.defaultImageBitmap,
         headerContent = { HeaderContent(windpark) },
-        formContent = { })
+        formContent = { FormContent(windpark) })
 }
 
 
 @Composable
 fun HeaderContent(windpark: Windpark?) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()) {
-            Column(verticalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxHeight().padding(16.dp)) {
-                Text(text = windpark?.name.format(), fontSize = 35.sp, fontWeight = FontWeight.Light)
-                Text(text = windpark?.canton.format(), fontSize = 25.sp, fontWeight = FontWeight.Thin)
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxHeight().padding(16.dp)
+        ) {
+            Text(text = windpark?.name.format(), fontSize = 35.sp, fontWeight = FontWeight.Light)
+            Text(text = windpark?.canton.format(), fontSize = 25.sp, fontWeight = FontWeight.Thin)
 
-                Spacer(modifier = Modifier.size(100.dp))
+            Spacer(modifier = Modifier.size(100.dp))
 
-                Text(text = "${windpark?.installedPower_KW} kW", fontSize = 25.sp, fontWeight = FontWeight.Thin)
-                Text(text = "${windpark?.totalProduction_MWH} MWH", fontSize = 25.sp, fontWeight = FontWeight.Thin)
+            Text(text = "${windpark?.installedPower_KW} kW", fontSize = 25.sp, fontWeight = FontWeight.Thin)
+            Text(text = "${windpark?.totalProduction_MWH} MWH", fontSize = 25.sp, fontWeight = FontWeight.Thin)
+        }
+        Image(
+            bitmap = windpark?.imageBitmap ?: Windpark.defaultImageBitmap,
+            contentDescription = windpark?.name,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.width(230.dp).height(300.dp)
+        )
+    }
+}
+
+@Composable
+fun FormContent(windpark: Windpark?) {
+    FormField(label = "Status") {
+        LazyRow(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+        ) {
+            items(WindparkState.entries) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(
+                        selected = it.stateDescription(windpark?.status?.description ?: ""),
+                        onClick = { windpark?.updateStatus(it) },
+                        modifier = Modifier
+                    )
+                    Text(text = it.description)
+                }
             }
-            Image(
-                bitmap = windpark?.imageBitmap ?: Windpark.defaultImageBitmap,
-                contentDescription = windpark?.name,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.width(230.dp).height(300.dp)
-            )
         }
     }
+    FormTextField(label = "Name",
+        value = windpark?.name ?: "No name",
+        onValueChange = { windpark?.updateName(it) }
+    )
+    FormTextField(label = "Gemeinde",
+        value = windpark?.communes ?: "No communes",
+        onValueChange = { windpark?.updateName(it) }
+    )
+    TwoColumnRow(left = {
+        FormTextField(
+            label = "Baustart",
+            value = windpark?.constructionStart.toString(),
+            onValueChange = { windpark?.updateConstructionStart(it) },
+            modifier = it
+        )
+    }) {
+        FormTextField(
+            label = "Vollendung",
+            value = windpark?.completion.toString(),
+            onValueChange = { windpark?.updateCompletion(it) },
+            modifier = it
+        )
+    }
+
+    FormTextField(label = "Installierter Strom (kW)",
+        value = windpark?.installedPower_KW.toString() ?: "No power",
+        onValueChange = { windpark?.updateInstalledPower(it) }
+    )
+
+    TwoColumnRow(left = {
+        FormTextField(
+            label = "Produktion 2015 (MWH)",
+            value = windpark?.production2015_MWH.toString(),
+            onValueChange = { windpark?.updateProduction2015(it) },
+            modifier = it
+        )
+    }) {
+        FormTextField(
+            label = "Produktion 2016 (MWH)",
+            value = windpark?.production2016_MWH.toString(),
+            onValueChange = { windpark?.updateProduction2016(it) },
+            modifier = it
+        )
+    }
+
+    TwoColumnRow(left = {
+        FormTextField(
+            label = "Produktion 2017 (MWH)",
+            value = windpark?.production2017_MWH.toString(),
+            onValueChange = { windpark?.updateProduction2017(it) },
+            modifier = it
+        )
+    }) {
+        FormTextField(
+            label = "Produktion 2018 (MWH)",
+            value = windpark?.production2018_MWH.toString(),
+            onValueChange = { windpark?.updateProduction2018(it) },
+            modifier = it
+        )
+    }
+
+
+    FormTextField(label = "Anzahl",
+        value = windpark?.count.toString(),
+        onValueChange = { windpark?.updateCount(it.toInt()) }
+    )
+
+
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -165,8 +261,8 @@ fun CardExplorer(windpark: Windpark, institution: ControllingInstitution) {
             }
         }
     }
-
 }
+
 
 private fun cutLongWord(word: String): String {
     if (word.length > 20) {
