@@ -42,7 +42,6 @@ class ControllingInstitution {
 
     fun updateWindparkUnderControl(windpark: Windpark?){
         windparkUnderControl = windpark
-
         windpark?.loadImageBitmap()
     }
 
@@ -70,9 +69,10 @@ class ControllingInstitution {
         }
     }
 
-    fun save(){
+    fun save(): String{
         println("save")
         scrollTo(allWindparks.size - 1)
+        return "saved"
     }
 
     private fun scrollTo(windpark: Windpark){

@@ -155,13 +155,18 @@ fun FormContent(windpark: Windpark?) {
             }
         }
     }
+
     FormTextField(label = "Name",
         value = windpark?.name ?: "No name",
         onValueChange = { windpark?.updateName(it) }
     )
     FormTextField(label = "Gemeinde",
         value = windpark?.communes ?: "No communes",
-        onValueChange = { windpark?.updateName(it) }
+        onValueChange = { windpark?.updateCommunes(it) }
+    )
+    FormTextField(label = "Kanton",
+        value = windpark?.canton ?: "No canton",
+        onValueChange = { windpark?.updateCanton(it) }
     )
     TwoColumnRow(left = {
         FormTextField(
@@ -216,12 +221,31 @@ fun FormContent(windpark: Windpark?) {
         )
     }
 
-
     FormTextField(label = "Anzahl",
         value = windpark?.count.toString(),
-        onValueChange = { windpark?.updateCount(it.toInt()) }
+        onValueChange = { windpark?.updateCount(it) }
     )
 
+    TwoColumnRow(left = {
+        FormTextField(
+            label = "Länge",
+            value = windpark?.longitude.toString() ,
+            onValueChange = { windpark?.updateLongitude(it) },
+            modifier = it
+        )
+    }) {
+        FormTextField(
+            label = "Breit",
+            value = windpark?.latitude.toString(),
+            onValueChange = { windpark?.updateLatitude(it) },
+            modifier = it
+        )
+    }
+
+    FormTextField(label = "Bild URL",
+        value = windpark?.imageUrl ?: "No Image",
+        onValueChange = { windpark?.updateImageURL(it) }
+    )
 
 }
 

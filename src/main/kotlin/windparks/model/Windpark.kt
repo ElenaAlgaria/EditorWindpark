@@ -29,7 +29,7 @@ import androidx.compose.ui.res.loadImageBitmap
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
-enum class WindparkState( val description: String) {
+enum class WindparkState(val description: String) {
     PROJECTED("geplant"),
     OPERATIONAL("in Betrieb"),
     UNDER_CONSTRUCTION("in Bau");
@@ -39,16 +39,30 @@ enum class WindparkState( val description: String) {
     }
 }
 
-private fun String?.asWindparkState() : WindparkState? = WindparkState.values().find { it.description == this }
+private fun String?.asWindparkState(): WindparkState? = WindparkState.values().find { it.description == this }
 
 //TODO: Review
 // die optionalen Felder sind als nullable definiert. 'null' bedeutet also 'Wert unbekannt'
 // wie ist das genau gemacht?
 
-class Windpark(val id: Int = System.currentTimeMillis().toInt(), name: String? = null,
-               status: String? = null, constructionStart: Int? = null, completion: Int? = null, installedPower_KW: Int? = null,
-               production2015_MWH: Double? = null, production2016_MWH: Double? = null, production2017_MWH: Double? = null, production2018_MWH: Double? = null,
-               count: Int? = null, communes: String? = null, canton: String? = null, longitude: Double? = null, latitude: Double? = null, imageUrl: String? = null) {
+class Windpark(
+    val id: Int = System.currentTimeMillis().toInt(),
+    name: String? = null,
+    status: String? = null,
+    constructionStart: Int? = null,
+    completion: Int? = null,
+    installedPower_KW: Int? = null,
+    production2015_MWH: Double? = null,
+    production2016_MWH: Double? = null,
+    production2017_MWH: Double? = null,
+    production2018_MWH: Double? = null,
+    count: Int? = null,
+    communes: String? = null,
+    canton: String? = null,
+    longitude: Double? = null,
+    latitude: Double? = null,
+    imageUrl: String? = null
+) {
 
     private val modelScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -107,86 +121,83 @@ class Windpark(val id: Int = System.currentTimeMillis().toInt(), name: String? =
     var bitmapLoaded by mutableStateOf(false)
         private set
 
-     fun updateName(newValue: String){
+    fun updateName(newValue: String) {
         name = newValue.ifBlank { null }
     }
 
-
-    //TODO: Implementierungen ergänzen gemäss TestCase
-
     fun updateConstructionStart(valueAsText: String) = valueAsText.ifInt { constructionStart = it }
 
-    fun updateCompletion(valueAsText: String)        = valueAsText.ifInt { completion = it }
+    fun updateCompletion(valueAsText: String) = valueAsText.ifInt { completion = it }
 
-    fun updateInstalledPower(valueAsText: String)    = valueAsText.ifInt { installedPower_KW = it }
+    fun updateInstalledPower(valueAsText: String) = valueAsText.ifInt { installedPower_KW = it }
 
-    fun updateCount(valueAsText: String)    = valueAsText.ifInt { count = it }
+    fun updateCount(valueAsText: String) = valueAsText.ifInt { count = it }
 
-    fun updateProduction2015(valueAsText: String)  {
+    fun updateProduction2015(valueAsText: String) {
         valueAsText.ifDouble { production2015_MWH = it }
         totalProduction_MWH = totalProduction()
     }
 
-    fun updateProduction2016(valueAsText: String){
+    fun updateProduction2016(valueAsText: String) {
         valueAsText.ifDouble { production2016_MWH = it }
         totalProduction_MWH = totalProduction()
     }
 
-    fun updateProduction2017(valueAsText: String){
-        valueAsText.ifDouble { production2017_MWH = it}
+    fun updateProduction2017(valueAsText: String) {
+        valueAsText.ifDouble { production2017_MWH = it }
         totalProduction_MWH = totalProduction()
     }
 
     fun updateProduction2018(valueAsText: String) {
-        valueAsText.ifDouble { production2018_MWH = it}
+        valueAsText.ifDouble { production2018_MWH = it }
         totalProduction_MWH = totalProduction()
     }
 
-    fun updateLongitude(valueAsText: String)         = valueAsText.ifDouble { longitude = it }
+    fun updateLongitude(valueAsText: String) = valueAsText.ifDouble { longitude = it }
 
-    fun updateLatitude(valueAsText: String)          = valueAsText.ifDouble { latitude = it }
+    fun updateLatitude(valueAsText: String) = valueAsText.ifDouble { latitude = it }
 
-    fun updateStatus(newValue: WindparkState){
+    fun updateStatus(newValue: WindparkState) {
         status = newValue
     }
 
-
-    fun updateCommunes(valueAsText: String){
+    fun updateCommunes(valueAsText: String) {
         communes = valueAsText.ifBlank { null }
     }
 
-    fun updateCanton(valueAsText: String){
+    fun updateCanton(valueAsText: String) {
         canton = valueAsText.ifBlank { null }
     }
 
-    fun updateImageURL(newValue: String){
+    fun updateImageURL(newValue: String) {
         imageUrl = newValue
         imageBitmap = defaultImageBitmap
         bitmapLoaded = false
         loadImageBitmap()
     }
 
-    fun loadImageBitmap(){
-        //TODO: image asynchron laden
-        modelScope.launch {
-            imageBitmap = getImageBitmapFromUrl(url = imageUrl!!)
+    fun loadImageBitmap() {
+        if (imageUrl != null) {
+            modelScope.launch {
+                imageBitmap = getImageBitmapFromUrl(url = imageUrl!!)
+            }
         }
     }
 
 
-    private fun totalProduction() : Double {
+    private fun totalProduction(): Double {
         var total = 0.0
 
-        if(production2015_MWH != null){
+        if (production2015_MWH != null) {
             total += production2015_MWH!!
         }
-        if(production2016_MWH != null){
+        if (production2016_MWH != null) {
             total += production2016_MWH!!
         }
-        if(production2017_MWH != null){
+        if (production2017_MWH != null) {
             total += production2017_MWH!!
         }
-        if(production2018_MWH != null){
+        if (production2018_MWH != null) {
             total += production2018_MWH!!
         }
 
@@ -202,9 +213,9 @@ class Windpark(val id: Int = System.currentTimeMillis().toInt(), name: String? =
 }
 
 
-
 @OptIn(ExperimentalComposeUiApi::class)
-private fun getImageBitmapFromResources(fileName: String) = ResourceLoader.Default.load(fileName).buffered().use(::loadImageBitmap)
+private fun getImageBitmapFromResources(fileName: String) =
+    ResourceLoader.Default.load(fileName).buffered().use(::loadImageBitmap)
 
 private fun getImageBitmapFromUrl(url: String): ImageBitmap {
     return try {
@@ -227,7 +238,7 @@ private fun String.asDouble() = trim().replace("$chGroupingSeparator", "").toDou
 private fun String.asInt() = trim().replace("$chGroupingSeparator", "").toIntOrNull()
 
 
-fun String.ifDouble(update: (Double?) -> Unit){
+fun String.ifDouble(update: (Double?) -> Unit) {
     if (this.isBlank() || floatCHRegex.matches(this)) {
         update(this.asDouble())
     } else {

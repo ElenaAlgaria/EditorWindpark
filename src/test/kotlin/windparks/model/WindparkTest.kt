@@ -65,8 +65,58 @@ class WindparkTest{
         assertNull(value)
     }
 
-    //todo: implement TestCase 'testIfDouble' analog zu 'testIfInt'
+    @Test
+    fun testIfDouble(){
+        //given
+        var value : Double? = null
 
+        //when
+        "1.0".ifDouble { value = it }
+
+        //then
+        assertEquals(1.0, value)
+
+        "1.5".ifDouble { value = it }
+
+        //then
+        assertEquals(1.5, value)
+
+        //when
+        "+2.0".ifDouble { value = it }
+
+        //then
+        assertEquals(2.0, value)
+
+        //when
+        "-2.0".ifDouble { value = it }
+
+        //then
+        assertEquals(-2.0, value)
+
+        //when
+        "-2’000.0".ifDouble { value = it }
+
+        //then
+        assertEquals(-2000.0, value)
+
+        //when
+        "-2’010.3".ifDouble { value = it }
+
+        //then
+        assertEquals(-2010.3, value)
+
+        //when
+        "invalid input".ifDouble { value = it }
+
+        //then
+        assertEquals(-2010.3, value)
+
+        //when
+        "   ".ifDouble { value = it }
+
+        //then
+        assertNull(value)
+    }
 
     @Test
     fun testUpdateProduction(){
