@@ -234,7 +234,13 @@ fun FormTextField(label: String, labelWidth: Dp = 100.dp, modifier: Modifier = M
 
 
 /**
- * This composable FormField
+ * The composable FormField displays a label near a control. The label is on the left side and the control is on the
+ * right side.
+ *
+ * @param label the text of the label
+ * @param labelWidth the width of the label
+ * @param modifier the modifier of the row in which the label and the control are
+ * @param control composable function of the control besides the label
  */
 @Composable
 fun FormField(label: String, labelWidth: Dp = 100.dp, modifier: Modifier = Modifier, control: @Composable (modifier: Modifier) -> Unit){
@@ -257,10 +263,11 @@ val CH = Locale("de", "CH")
 * this is an Extension Function for any kind of Number.
 * see https://kotlinlang.org/docs/extensions.html
 *------------------------------------------------------
-* This function formats swiss numbers with markers.
+* This function formats numbers the swiss way either with a pattern or a nullFormat (" ").
+ *
  *
  * @param pattern a string for how to display numbers
- * @param nullFormat if the number is null
+ * @param nullFormat for when a number is null
  * @return return the formatted number
 *
 */
