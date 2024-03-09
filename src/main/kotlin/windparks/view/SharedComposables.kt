@@ -248,19 +248,44 @@ fun FormField(label: String, labelWidth: Dp = 100.dp, modifier: Modifier = Modif
     }
 }
 
+/**
+ * To format numbers the swiss way
+ */
 val CH = Locale("de", "CH")
 
-// this is an Extension Function for any kind of Number.
-// see https://kotlinlang.org/docs/extensions.html
+/**
+* this is an Extension Function for any kind of Number.
+* see https://kotlinlang.org/docs/extensions.html
+*------------------------------------------------------
+* This function formats swiss numbers with markers.
+ *
+ * @param pattern a string for how to display numbers
+ * @param nullFormat if the number is null
+ * @return return the formatted number
+*
+*/
 fun Number?.format(pattern: String, nullFormat: String = ""): String {
     return if (null == this) nullFormat else pattern.format(CH, this)
 }
 
-//other extension functions
-
+/**
+ *  A function that makes a format for null Strings
+ *
+ *  @param nullFormat for when the String is null
+ *  @return returns the formatted string
+ */
 fun String?.format(nullFormat: String = "") = this ?: nullFormat
 
+/**
+ * this function changes the cursor from arrow to hand
+ */
 fun Modifier.handCursor() = cursor(Cursor.HAND_CURSOR)
 
+/**
+ *  A function to change the cursor design
+ *
+ *  @param cursorId An Integer ID for the cursor
+ *  @return modified cursor
+ */
 fun Modifier.cursor(cursorId: Int) : Modifier = pointerHoverIcon(PointerIcon(Cursor(cursorId)))
 
