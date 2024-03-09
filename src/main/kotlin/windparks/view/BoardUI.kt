@@ -60,10 +60,6 @@ private fun TheUI(institution: ControllingInstitution) {
 
 @Composable
 private fun Toolbar(institution: ControllingInstitution) {
-    TopAppBar(modifier = Modifier,
-        backgroundColor = Color.White,
-        title = {},
-        actions = {
             IconButton(onClick = { institution.create() }) {
                 Icon(
                     imageVector = Icons.Filled.Add,
@@ -82,8 +78,6 @@ private fun Toolbar(institution: ControllingInstitution) {
                     contentDescription = "Delete"
                 )
             }
-        }
-    )
 }
 
 
@@ -110,7 +104,7 @@ private fun Editor(windpark: Windpark?) {
 
 
 @Composable
-fun HeaderContent(windpark: Windpark?) {
+private fun HeaderContent(windpark: Windpark?) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
@@ -137,7 +131,7 @@ fun HeaderContent(windpark: Windpark?) {
 }
 
 @Composable
-fun FormContent(windpark: Windpark?) {
+private fun FormContent(windpark: Windpark?) {
     FormField(label = "Status") {
         LazyRow(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -251,7 +245,7 @@ fun FormContent(windpark: Windpark?) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CardExplorer(windpark: Windpark, institution: ControllingInstitution) {
+private fun CardExplorer(windpark: Windpark, institution: ControllingInstitution) {
     Card(
         onClick = { institution.updateWindparkUnderControl(windpark) },
         modifier = Modifier.fillMaxWidth(),

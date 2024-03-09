@@ -42,6 +42,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ *  The composable MasterDetail shows the toolbar at the top, the editor on the right and the explorer on the left.
+ *
+ *  It contains a column with the toolbar and a row with two cards the editor and explorer.
+ *
+ *  @param toolbar composable function for the top
+ *  @param explorer composable function for the left side
+ *  @param editor composable function for the right side
+ */
 
 @Composable
 fun MasterDetail(toolbar:  @Composable () -> Unit = {},
@@ -76,7 +85,17 @@ fun MasterDetail(toolbar:  @Composable () -> Unit = {},
     }
 }
 
-
+/**
+ * The composable GenericExplorer contains a box nad a lazyColumn to display all the windpark cards.
+ * Also, the list is scrollable.
+ *
+ * @param T generic type for the element which gets displayed
+ * @param data a list with all elements
+ * @param key a unique Int key for all the elements
+ * @param scrollState a state for the scrolling of the list
+ * @param onShow a function that gets called to show the images of the elements
+ * @param listItem a composable function with the content of a list item
+ */
 @Composable
 fun<T> GenericExplorer(data: List<T>,
                        key: (T) -> Int,
