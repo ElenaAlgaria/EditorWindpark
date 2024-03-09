@@ -123,6 +123,17 @@ fun<T> GenericExplorer(data: List<T>,
 
 }
 
+/**
+ * The composable GenericEditor either shows a image if no windpark is selected or show the windparkeditor.
+ * The editor has header card with the most important information on it and an editorform where you can edit
+ * the information.
+ *
+ * @param T generic type for the element which gets displayed
+ * @param selectText a text that informs the user that no windpark is selected
+ * @param headerContent a composable function with the content for the most important information about the windpark
+ * @param formContent a composable function to edit the information about a windpark
+ */
+
 @Composable
 fun<T> GenericEditor(item: T?,
                      selectText: String, backgroundImage: ImageBitmap,
@@ -160,6 +171,13 @@ fun<T> GenericEditor(item: T?,
     }
 }
 
+/**
+ * The composable NothingSelected is called when in the explorer no windpark is selected. It shows a text
+ * and a placeholder image.
+ *
+ * @param text a text with an information that nothing is selected
+ * @param backgroundImage the placeholder image
+ */
 @Composable
 fun NothingSelected(text: String, backgroundImage: ImageBitmap){
     Box(modifier         = Modifier.fillMaxSize(),
@@ -177,7 +195,13 @@ fun NothingSelected(text: String, backgroundImage: ImageBitmap){
     }
 }
 
-
+/**
+ * The composable TwoColumnRow is for the FormContent in the editor. It contains a row with a placeholder for the
+ * left and the right side. Also, it has a space between them.
+ *
+ * @param left this composable function is for the left column
+ * @param right this composable function is for the right column
+ */
 @Composable
 fun TwoColumnRow(left:  @Composable (Modifier) -> Unit, right:  @Composable (Modifier) -> Unit){
     Row(modifier = Modifier.fillMaxWidth()){
@@ -187,7 +211,16 @@ fun TwoColumnRow(left:  @Composable (Modifier) -> Unit, right:  @Composable (Mod
     }
 }
 
-
+/**
+ * The composable FormTextField displays a text field in the editor to edit an information about a windpark. It takes
+ * another composable FormField to display a label on the left side and an OutlinedTextField on the right side.
+ *
+ * @param label a label for the text field
+ * @param labelWidth a width for the label
+ * @param modifier a modifier to modify the FormField
+ * @param value the value of the text field
+ * @param onValueChange when the value gets changed this function gets triggert
+ */
 @Composable
 fun FormTextField(label: String, labelWidth: Dp = 100.dp, modifier: Modifier = Modifier, value: String, onValueChange : (String) -> Unit){
     FormField(label      = label,
@@ -200,8 +233,9 @@ fun FormTextField(label: String, labelWidth: Dp = 100.dp, modifier: Modifier = M
 }
 
 
-
-
+/**
+ * This composable FormField
+ */
 @Composable
 fun FormField(label: String, labelWidth: Dp = 100.dp, modifier: Modifier = Modifier, control: @Composable (modifier: Modifier) -> Unit){
     Row(modifier          = modifier.padding(vertical = 15.dp),

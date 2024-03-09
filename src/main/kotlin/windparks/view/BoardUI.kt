@@ -60,19 +60,22 @@ private fun TheUI(institution: ControllingInstitution) {
 
 @Composable
 private fun Toolbar(institution: ControllingInstitution) {
-            IconButton(onClick = { institution.create() }) {
+            IconButton(onClick = { institution.create() },
+                modifier = Modifier.handCursor()) {
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = "Create"
                 )
             }
-            IconButton(onClick = { institution.save() }) {
+            IconButton(onClick = { institution.save() },
+                modifier = Modifier.handCursor()) {
                 Icon(
                     imageVector = Icons.Filled.Save,
                     contentDescription = "Save"
                 )
             }
-            IconButton(onClick = { institution.delete() }) {
+            IconButton(onClick = { institution.delete() },
+                modifier = Modifier.handCursor()) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
                     contentDescription = "Delete"
