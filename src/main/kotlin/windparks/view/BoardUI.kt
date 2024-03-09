@@ -60,27 +60,33 @@ private fun TheUI(institution: ControllingInstitution) {
 
 @Composable
 private fun Toolbar(institution: ControllingInstitution) {
-            IconButton(onClick = { institution.create() },
-                modifier = Modifier.handCursor()) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Create"
-                )
-            }
-            IconButton(onClick = { institution.save() },
-                modifier = Modifier.handCursor()) {
-                Icon(
-                    imageVector = Icons.Filled.Save,
-                    contentDescription = "Save"
-                )
-            }
-            IconButton(onClick = { institution.delete() },
-                modifier = Modifier.handCursor()) {
-                Icon(
-                    imageVector = Icons.Filled.Delete,
-                    contentDescription = "Delete"
-                )
-            }
+    IconButton(
+        onClick = { institution.create() },
+        modifier = Modifier.handCursor()
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Add,
+            contentDescription = "Create"
+        )
+    }
+    IconButton(
+        onClick = { institution.save() },
+        modifier = Modifier.handCursor()
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Save,
+            contentDescription = "Save"
+        )
+    }
+    IconButton(
+        onClick = { institution.delete() },
+        modifier = Modifier.handCursor()
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Delete,
+            contentDescription = "Delete"
+        )
+    }
 }
 
 
@@ -165,85 +171,51 @@ private fun FormContent(windpark: Windpark?) {
         value = windpark?.canton ?: "No canton",
         onValueChange = { windpark?.updateCanton(it) }
     )
-    TwoColumnRow(left = {
-        FormTextField(
-            label = "Baustart",
-            value = windpark?.constructionStart.toString(),
-            onValueChange = { windpark?.updateConstructionStart(it) },
-            modifier = it
-        )
-    }) {
-        FormTextField(
-            label = "Vollendung",
-            value = windpark?.completion.toString(),
-            onValueChange = { windpark?.updateCompletion(it) },
-            modifier = it
-        )
-    }
+
+    TwoColumnRows(labelLeft = "Baustart",
+        valueLeft = windpark?.constructionStart.toString(),
+        onValueChangedLeft = { windpark?.updateConstructionStart(it) },
+        labelRight = "Vollendung",
+        valueRight = windpark?.completion.toString(),
+        onValueChangedRight = { windpark?.updateCompletion(it) })
 
     FormTextField(label = "Installierter Strom (kW)",
         value = windpark?.installedPower_KW.toString() ?: "No power",
         onValueChange = { windpark?.updateInstalledPower(it) }
     )
 
-    TwoColumnRow(left = {
-        FormTextField(
-            label = "Produktion 2015 (MWH)",
-            value = windpark?.production2015_MWH.toString(),
-            onValueChange = { windpark?.updateProduction2015(it) },
-            modifier = it
-        )
-    }) {
-        FormTextField(
-            label = "Produktion 2016 (MWH)",
-            value = windpark?.production2016_MWH.toString(),
-            onValueChange = { windpark?.updateProduction2016(it) },
-            modifier = it
-        )
-    }
+    TwoColumnRows(labelLeft = "Produktion 2015 (MWH)",
+        valueLeft = windpark?.production2015_MWH.toString(),
+        onValueChangedLeft = { windpark?.updateProduction2015(it) },
+        labelRight = "Produktion 2016 (MWH)",
+        valueRight = windpark?.production2016_MWH.toString(),
+        onValueChangedRight = { windpark?.updateProduction2016(it) })
 
-    TwoColumnRow(left = {
-        FormTextField(
-            label = "Produktion 2017 (MWH)",
-            value = windpark?.production2017_MWH.toString(),
-            onValueChange = { windpark?.updateProduction2017(it) },
-            modifier = it
-        )
-    }) {
-        FormTextField(
-            label = "Produktion 2018 (MWH)",
-            value = windpark?.production2018_MWH.toString(),
-            onValueChange = { windpark?.updateProduction2018(it) },
-            modifier = it
-        )
-    }
+    TwoColumnRows(labelLeft = "Produktion 2017 (MWH)",
+        valueLeft = windpark?.production2017_MWH.toString(),
+        onValueChangedLeft = { windpark?.updateProduction2017(it) },
+        labelRight = "Produktion 2018 (MWH)",
+        valueRight = windpark?.production2018_MWH.toString(),
+        onValueChangedRight = { windpark?.updateProduction2018(it) })
+
 
     FormTextField(label = "Anzahl",
         value = windpark?.count.toString(),
         onValueChange = { windpark?.updateCount(it) }
     )
 
-    TwoColumnRow(left = {
-        FormTextField(
-            label = "Länge",
-            value = windpark?.longitude.toString() ,
-            onValueChange = { windpark?.updateLongitude(it) },
-            modifier = it
-        )
-    }) {
-        FormTextField(
-            label = "Breit",
-            value = windpark?.latitude.toString(),
-            onValueChange = { windpark?.updateLatitude(it) },
-            modifier = it
-        )
-    }
+    TwoColumnRows(labelLeft = "Länge",
+        valueLeft = windpark?.longitude.toString(),
+        onValueChangedLeft = { windpark?.updateLongitude(it) },
+        labelRight = "Breite",
+        valueRight = windpark?.latitude.toString(),
+        onValueChangedRight = { windpark?.updateLatitude(it) })
+
 
     FormTextField(label = "Bild URL",
         value = windpark?.imageUrl ?: "No Image",
         onValueChange = { windpark?.updateImageURL(it) }
     )
-
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -284,6 +256,30 @@ private fun CardExplorer(windpark: Windpark, institution: ControllingInstitution
     }
 }
 
+@Composable
+private fun TwoColumnRows(
+    labelLeft: String, labelRight: String,
+    valueLeft: String, valueRight: String,
+    onValueChangedLeft: (String) -> Unit,
+    onValueChangedRight: (String) -> Unit
+) {
+
+    TwoColumnRow(left = {
+        FormTextField(
+            label = labelLeft,
+            value = valueLeft,
+            onValueChange = onValueChangedLeft,
+            modifier = it
+        )
+    }) {
+        FormTextField(
+            label = labelRight,
+            value = valueRight,
+            onValueChange = onValueChangedRight,
+            modifier = it
+        )
+    }
+}
 
 private fun cutLongWord(word: String): String {
     if (word.length > 20) {
