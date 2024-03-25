@@ -86,34 +86,39 @@ _Hinweis_: Natürlich können auch die eigenen Funktionen in dieser Weise dokume
 === Bewertung
 Es können in diesem Assignment maximal 24 Punkte erreicht werden. Der Fokus liegt dabei, neben der Umsetzung der gewünschten Funktionalität, auf der Code-Qualität.
 
-[cols=2, format=dsv]
+[cols=3, format=dsv]
 |===
-Bereich:Mögliche Punktzahl
-*Funktionalitäten*:*12 Pt. Total (*0.5 falls `SharedComposables in Verwendung)*
-Darstellung aller Schweizer Windparks:2 Pt.
-Editor zur Veränderung eines Windparks:2 Pt.
-Master-Detail-View (Selection-Handling Explorer/Editor):2 Pt.
-Neuer Windpark kann angelegt werden "Create":2 Pt.
-Bestehender Windpark kann gelöscht werden "Delete":2 Pt.
-Windpark kann modifiziert werden "Update" (Liveupdate im Header & Explorer):2 Pt.
+Bereich:Mögliche Punktzahl:Erreichte Punktzahl
+*Funktionalitäten*:*12 Pt. Total (*0.5 falls `SharedComposables in Verwendung): SharedComposables in Verwendung *6 Pt.*
+Darstellung aller Schweizer Windparks:2 Pt.:2 Pt.
+Editor zur Veränderung eines Windparks:2 Pt.:2 Pt.
+Master-Detail-View (Selection-Handling Explorer/Editor):2 Pt.:2 Pt.
+Neuer Windpark kann angelegt werden "Create":2 Pt.:2 Pt.
+Bestehender Windpark kann gelöscht werden "Delete":2 Pt.:2 Pt.
+Windpark kann modifiziert werden "Update" (Liveupdate im Header & Explorer):2 Pt.:2 Pt.
 
-*Architektur*:*9 Pt. Total*
-Klare Aufgabenverteilung zwischen Model und View:5 Pt.
-Saubere Aufteilung der Composables in Sub-Composables:1 Pt.
-Code Qualität: 3 Pt.
+*Architektur*:*9 Pt. Total*: *8.75 Pt.*
+Klare Aufgabenverteilung zwischen Model und View:5 Pt.:5 Pt.
+Saubere Aufteilung der Composables in Sub-Composables:1 Pt.: 0.75 Pt.
+Code Qualität: 3 Pt.:3 Pt.
 
-*Test-Cases*:*3 Pt. Total*
-Todos in `WindparkTest` erledigt:1 Pt.
-`ControllingInstitutionTest`deckt die gesamte Funktionalität von `ControllingInstitution`ab:2 Pt.
+*Test-Cases*:*3 Pt. Total*:*3 Pt.*
+Todos in `WindparkTest` erledigt:1 Pt.:1 Pt.
+`ControllingInstitutionTest`deckt die gesamte Funktionalität von `ControllingInstitution`ab:2 Pt.:2 Pt.
 
-*Code Dokumentation falls `SharedComposables` in Verwendung*:*6 Pt. Total*
-Code Dokumentation hält sich an das KDoc-Format und ist aussagekräftig: 4 Pt.
-Alle verwendeten `SharedComposables` sind korrekt dokumentiert: 2 Pt.
+*Code Dokumentation falls `SharedComposables` in Verwendung*:*6 Pt. Total*:*6 Pt.*
+Code Dokumentation hält sich an das KDoc-Format und ist aussagekräftig: 4 Pt.:4 Pt.
+Alle verwendeten `SharedComposables` sind korrekt dokumentiert: 2 Pt.:2 Pt.
 |===
 
 Die Note wird wie folgt berechnet und macht 20% der Gesamtnote aus.
 
 Note = ((Erreichte Punkte / 24) * 5) + 1
+
+*Erreichte Note: 6.0*
+
+Kommentar:
+Super Projekt und schöne umsetzung. Das einzige was uns aufgefallen ist, dass die Composables noch etwas bessere und generischer hätten aufgeteilt werden können. Das nächste mal bitte alle TODOs entfernden :)
 
 == Compose Desktop Application
 Für eines der Beispiele kann jeweils eine "doppelklickbare" Applikation und ein dazugehöriger Installer generiert werden.
